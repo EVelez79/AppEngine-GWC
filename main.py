@@ -61,6 +61,21 @@ class MainHandler(webapp2.RequestHandler):
             template = jinja_environment.get_template('index.html')
             self.response.out.write(template.render(url_text = url_text, url = url))
 
+class AboutHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('about.html')
+        greeting = "Hello"
+        self.response.out.write(template.render(greeting = greeting))
+
+class OutputHandler(webapp2.RequestHandler):
+    def post(self):
+        data = self.request.get('userInput')
+
+        template = jinja_environment.get_template('output.html')
+        self.response.out.write(template.render(data =data))
+
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/about', AboutHandler),
+    ('/output', OutputHandler)
 ], debug=True)
